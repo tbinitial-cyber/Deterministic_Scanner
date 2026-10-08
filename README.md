@@ -2,6 +2,8 @@
 
 A strictly deterministic, non-AI engine for auditing websites against the **DPDPA 2023** and **DPDP Rules 2025**.
 
+*Note: The current legal knowledge base implements an initial evidence-mapped subset of DPDPA 2023 and DPDP Rules 2025 provisions relevant to the current audit pipeline.*
+
 ## Architecture & Design Principles
 
 1. **Raw-Facts-First**: Observations are made purely through headless browser telemetry (CDP) and DOM inspection.

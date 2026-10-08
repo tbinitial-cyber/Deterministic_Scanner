@@ -5,15 +5,14 @@ __pycache__/
 
 # Output and data
 output/
+output_real/
+**/output/
 fixtures/raw/
-*.json
-!fixtures/synthetic/*.json
-!legal/*.json
 
 # Environments
 .env
-.venv
-env/
+.env.*
+.venv/
 venv/
 ENV/
 env.bak/
