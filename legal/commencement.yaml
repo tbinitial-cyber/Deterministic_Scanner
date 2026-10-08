@@ -1,0 +1,8 @@
+- threshold_date: "2027-05-13"
+  status_if_past: "in_force"
+  status_if_future: "not_yet_in_force"
+  description: "Official 18-month commencement for Sections 3-5, 6(1)-(8), 6(10), 7-17 of Act, and specified Rules"
+- threshold_date: "2026-11-13"
+  status_if_past: "in_force"
+  status_if_future: "not_yet_in_force"
+  description: "Official 12-month commencement for Section 6(9) of Act and Rule 4"

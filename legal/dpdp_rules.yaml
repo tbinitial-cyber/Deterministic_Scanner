@@ -1,0 +1,37 @@
+- rule_id: DPDPR_R3_NOTICE
+  source_type: Rules
+  source_document: DPDP_Rules_2025
+  provision: Rule 3
+  title: Notice Details
+  requirement:
+    - Itemised notice where applicable
+    - Specified clear format
+  applies_when:
+    - notice_is_required
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - privacy_policy
+    - consent_notice
+  technical_test: check_notice_documentation
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPR_R8_RETENTION
+  source_type: Rules
+  source_document: DPDP_Rules_2025
+  provision: Rule 8
+  title: Erasure and Retention
+  requirement:
+    - Erasure upon purpose completion or consent withdrawal
+    - Minimum one-year retention for specified logs
+  applies_when:
+    - processing_scope_is_in_scope
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - retention_observation
+    - documented_retention
+  technical_test: check_retention_mechanisms
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true

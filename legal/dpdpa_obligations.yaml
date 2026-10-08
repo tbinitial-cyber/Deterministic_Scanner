@@ -1,0 +1,141 @@
+- rule_id: DPDPA_S4_GROUNDS
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 4
+  title: Grounds for Processing
+  requirement:
+    - Processing must be for a lawful purpose
+    - Processing must be based on consent or certain legitimate uses
+  applies_when:
+    - processing_scope_is_in_scope
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - documented_purpose
+    - consent_observation
+  technical_test: check_lawful_basis
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPA_S5_NOTICE
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 5
+  title: Notice
+  requirement:
+    - Inform Data Principal of personal data proposed to be processed
+    - Inform purpose of processing
+    - Provide rights-related information
+  applies_when:
+    - processing_scope_is_in_scope
+    - notice_is_required
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - privacy_policy
+    - consent_notice
+    - observed_data_categories
+    - observed_purposes
+  technical_test: check_notice_documentation
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPA_S6_CONSENT
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 6
+  title: Consent
+  requirement:
+    - Consent must be free, specific, informed, unconditional, and unambiguous
+    - Capable of being withdrawn
+  applies_when:
+    - processing_scope_is_in_scope
+    - relies_on_consent
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - consent_observation
+  technical_test: check_consent_validity
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: false
+
+- rule_id: DPDPA_S8_GENERAL
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 8
+  title: General Obligations
+  requirement:
+    - Ensure completeness, accuracy and consistency
+    - Implement technical and organisational measures
+    - Reasonable security safeguards
+    - Erasure upon purpose completion/consent withdrawal
+    - Valid processor contracts
+  applies_when:
+    - processing_scope_is_in_scope
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - vendor_contracts
+    - retention_observation
+    - security_observation
+  technical_test: check_general_obligations
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPA_S9_CHILDREN
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 9
+  title: Processing of Children's Data
+  requirement:
+    - Verifiable parental consent
+    - No behavioural tracking/targeted advertising directed at children
+  applies_when:
+    - processing_involves_children
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - data_subject_category
+    - behavioural_tracking_observation
+  technical_test: check_child_tracking
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPA_S10_SDF
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 10
+  title: Significant Data Fiduciary
+  requirement:
+    - Appoint DPO based in India
+    - Appoint independent data auditor
+    - Undertake periodic DPIA
+  applies_when:
+    - sdf_status_is_active
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - sdf_notification
+    - dpia_register
+  technical_test: check_sdf_obligations
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
+
+- rule_id: DPDPA_S16_TRANSFERS
+  source_type: Act
+  source_document: DPDPA_2023
+  provision: Section 16
+  title: Cross-Border Transfers
+  requirement:
+    - Transfers permitted unless to restricted countries notified by Central Government
+  applies_when:
+    - involves_foreign_transfer
+  effective_from: "2027-05-13"
+  exceptions: []
+  evidence_required:
+    - destination_host
+    - observed_region
+    - documented_region
+  technical_test: check_cross_border_transfers
+  possible_outcomes: [aligned, gap, insufficient_evidence, requires_human_review]
+  human_review_required: true
