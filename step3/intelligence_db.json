@@ -1,0 +1,61 @@
+{
+  "hosts": {
+    "geolocation.onetrust.com": {
+      "vendor": "OneTrust",
+      "category": "Consent infrastructure",
+      "confidence": "high"
+    },
+    "cdn.cookielaw.org": {
+      "vendor": "OneTrust",
+      "category": "Consent infrastructure",
+      "confidence": "high"
+    },
+    "clarity.ms": {
+      "vendor": "Microsoft",
+      "category": "Behavioural analytics",
+      "confidence": "high"
+    },
+    "google-analytics.com": {
+      "vendor": "Google",
+      "category": "Analytics",
+      "confidence": "high"
+    },
+    "stats.g.doubleclick.net": {
+      "vendor": "Google",
+      "category": "Advertising",
+      "confidence": "high"
+    },
+    "stripe.com": {
+      "vendor": "Stripe",
+      "category": "Payments",
+      "confidence": "high"
+    },
+    "intercom.io": {
+      "vendor": "Intercom",
+      "category": "Functional support",
+      "confidence": "high"
+    },
+    "segment.io": {
+      "vendor": "Twilio (Segment)",
+      "category": "Data routing",
+      "confidence": "high"
+    }
+  },
+  "cookies": {
+    "_ga": {
+      "vendor": "Google",
+      "category": "Analytics",
+      "confidence": "high"
+    },
+    "_clck": {
+      "vendor": "Microsoft",
+      "category": "Behavioural analytics",
+      "confidence": "high"
+    },
+    "OptanonConsent": {
+      "vendor": "OneTrust",
+      "category": "Essential",
+      "confidence": "high"
+    }
+  }
+}

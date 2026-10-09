@@ -2,3 +2,4 @@ playwright==1.60.0
 pydantic==2.13.4
 beautifulsoup4==4.15.0
 PyYAML==6.0.3
+tldextract==5.4.0

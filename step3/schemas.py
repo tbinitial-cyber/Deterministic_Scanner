@@ -3,6 +3,7 @@ from typing import Optional, List, Dict
 
 class EnrichedHost(BaseModel):
     domain: str
+    normalized_domain: Optional[str] = None
     is_first_party: bool
     vendor: str
     category: str

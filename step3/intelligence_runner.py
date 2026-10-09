@@ -27,7 +27,7 @@ def run_intelligence(target_url: str):
     save_json(graph, os.path.join(out_dir, "data_flow_graph.json"))
     
     # Also separate vendors and trackers for convenience
-    vendors = list({h.vendor for h in enriched_hosts if not h.is_first_party and h.vendor != "Unknown"})
+    vendors = sorted(list({h.vendor for h in enriched_hosts if not h.is_first_party and h.vendor != "Unknown"}))
     trackers = [h for h in enriched_hosts if h.category in ["Advertising", "Behavioural analytics", "Analytics"]]
     
     save_json(vendors, os.path.join(out_dir, "vendors.json"))
