@@ -30,3 +30,5 @@ pyvenv.cfg
 # OS files
 .DS_Store
 Thumbs.db
+
+test_output/
