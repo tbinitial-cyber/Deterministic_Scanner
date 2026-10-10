@@ -20,8 +20,8 @@ def get_consent_states(domain: str, behaviour_findings: list) -> dict:
     for finding in behaviour_findings:
         if finding.get('target') == domain:
             return {
-                'pre_consent': finding.get('pre_consent', False),
-                'accept_all': finding.get('accept_all', False),
-                'reject_all': finding.get('reject_all', False)
+                'pre_consent_observed': finding.get('pre_consent', False),
+                'accept_all_observed': finding.get('accept_all', False),
+                'reject_all_attempted_observed': finding.get('reject_all', False)
             }
     return {}

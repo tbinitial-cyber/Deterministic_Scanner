@@ -21,7 +21,7 @@ class LineageEdge(BaseModel):
     target_node: str
     relationship: str  # collects, sets, sends_to, calls, receives, stores, transforms, derives, shares_with, resolves_to, performs
     direction: str = "directed"
-    consent_states: Optional[Dict[str, bool]] = None
+    observed_in_scenarios: Optional[Dict[str, bool]] = Field(default=None, description="Observation scenarios where this edge was active. This documents actual network/storage presence regardless of whether the UI consent interaction succeeded.")
     evidence_refs: List[str] = Field(default_factory=list)
     confidence: str
 

@@ -15,47 +15,65 @@ def load_json(path: str):
 
 def run_lineage():
     print("=== Starting Step 7 Data Lineage Reconstruction ===")
-    
-    # Define inputs
+
     in_paths = {
-        "step1/cookies.json": "output/cookies.json",
+        "step1/cookies_pre_consent.json": "output/consent_audit/pre_consent/cookies.json",
+        "step1/cookies_accept_all.json": "output/consent_audit/accept_all/cookies.json",
+        "step1/cookies_reject_all.json": "output/consent_audit/reject_all/cookies.json",
         "step2/behaviour_findings.json": "output/consent_audit/behaviour_findings.json",
         "step3/hosts.json": "output/data_flow/hosts.json",
         "step3/vendors.json": "output/data_flow/vendors.json",
         "step5/policy_facts.json": "output/documents/policy_facts.json",
         "step6/evidence_graph.json": "output/reconciliation/evidence_graph.json"
     }
-    
-    # Load data
-    cookies = load_json(in_paths["step1/cookies.json"])
+
+    cookies_map = {}
+    for state, key in [('pre_consent_observed', 'step1/cookies_pre_consent.json'),
+                       ('accept_all_observed', 'step1/cookies_accept_all.json'),
+                       ('reject_all_attempted_observed', 'step1/cookies_reject_all.json')]:
+        path = in_paths[key]
+        if os.path.exists(path):
+            state_cookies = load_json(path)
+            for c in state_cookies:
+                cid = f"{c.get('name')}:{c.get('domain')}"
+                if cid not in cookies_map:
+                    c_clean = {k: v for k, v in c.items() if k not in ['value']}
+                    c_clean['observed_in_scenarios'] = {
+                        'pre_consent_observed': False,
+                        'accept_all_observed': False,
+                        'reject_all_attempted_observed': False
+                    }
+                    cookies_map[cid] = c_clean
+                cookies_map[cid]['observed_in_scenarios'][state] = True
+
+    # Sort cookies by domain, then name to ensure deterministic ordering
+    cookies = sorted(list(cookies_map.values()), key=lambda x: (x.get('domain', ''), x.get('name', '')))
+
     behaviour = load_json(in_paths["step2/behaviour_findings.json"])
     hosts = load_json(in_paths["step3/hosts.json"])
     vendors = load_json(in_paths["step3/vendors.json"])
-    
-    # Build Graph
+
     builder = GraphBuilder(cookies, hosts, vendors, behaviour)
     graph = builder.build()
-    
-    # Save outputs
+
     out_dir = "output/lineage"
     os.makedirs(out_dir, exist_ok=True)
-    
+
     save_json([n.model_dump() for n in graph.nodes], os.path.join(out_dir, "nodes.json"))
     save_json([e.model_dump() for e in graph.edges], os.path.join(out_dir, "edges.json"))
     save_json(graph.model_dump(), os.path.join(out_dir, "lineage_graph.json"))
-    
-    # Cryptographic Provenance
+
     input_hashes = {}
     for name, path in in_paths.items():
         if os.path.exists(path):
             input_hashes[name] = compute_sha256(path)
-            
+
     output_hashes = {
         "nodes.json": compute_sha256(os.path.join(out_dir, "nodes.json")),
         "edges.json": compute_sha256(os.path.join(out_dir, "edges.json")),
         "lineage_graph.json": compute_sha256(os.path.join(out_dir, "lineage_graph.json"))
     }
-    
+
     manifest = LineageManifest(
         target_url="https://miro.com",
         timestamp=datetime.now(timezone.utc).isoformat(),
@@ -65,7 +83,7 @@ def run_lineage():
         total_edges=len(graph.edges)
     )
     save_json(manifest.model_dump(), os.path.join(out_dir, "lineage_manifest.json"))
-    
+
     print("Step 7 Complete.")
     print(f"Total Nodes generated: {manifest.total_nodes}")
     print(f"Total Edges generated: {manifest.total_edges}")

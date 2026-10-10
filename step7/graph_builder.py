@@ -5,7 +5,7 @@ from .edge_builder import EdgeBuilder
 class GraphBuilder:
     def __init__(self, cookies: list, hosts: list, vendors: list, behaviour_findings: list):
         self.node_builder = NodeBuilder(cookies, hosts, vendors)
-        self.edge_builder = EdgeBuilder(behaviour_findings)
+        self.edge_builder = EdgeBuilder(behaviour_findings, cookies)
         
     def build(self) -> LineageGraph:
         nodes = []
