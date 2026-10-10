@@ -43,19 +43,34 @@ def evaluate_results(match_results: list, dpa_path: str) -> list[Discrepancy]:
                 requires_review=True
             ))
         elif mtype == 'not_observed':
-            discs.append(Discrepancy(
-                finding_id=f"REC-{generate_id('not_observed', doc.vendor, doc.service)}",
-                type="documented_entity_not_observed",
-                observed_entity=None,
-                documented_entity=doc,
-                technical_evidence="Telemetry did not trigger this vendor/service.",
-                document_evidence=f"Documentation explicitly lists {doc.vendor} {doc.service}",
-                matching_fields=[],
-                non_matching_fields=['vendor', 'service'],
-                match_reason=res['match_reason'],
-                confidence="medium",
-                requires_review=False
-            ))
+            if doc.vendor == "Unresolved Reference":
+                discs.append(Discrepancy(
+                    finding_id=f"REC-{generate_id('unresolved', doc.vendor, doc.service)}",
+                    type="unresolved_document_reference",
+                    observed_entity=None,
+                    documented_entity=doc,
+                    technical_evidence="Cannot reconcile without the referenced document.",
+                    document_evidence="Policy contains an unresolved reference to Subprocessors.",
+                    matching_fields=[],
+                    non_matching_fields=['vendor', 'service'],
+                    match_reason="Documented entity is an unresolved reference, not a concrete processor.",
+                    confidence="medium",
+                    requires_review=True
+                ))
+            else:
+                discs.append(Discrepancy(
+                    finding_id=f"REC-{generate_id('not_observed', doc.vendor, doc.service)}",
+                    type="documented_entity_not_observed",
+                    observed_entity=None,
+                    documented_entity=doc,
+                    technical_evidence="Telemetry did not trigger this vendor/service.",
+                    document_evidence=f"Documentation explicitly lists {doc.vendor} {doc.service}",
+                    matching_fields=[],
+                    non_matching_fields=['vendor', 'service'],
+                    match_reason=res['match_reason'],
+                    confidence="medium",
+                    requires_review=False
+                ))
         elif mtype == 'partial_match':
             discs.append(Discrepancy(
                 finding_id=f"REC-{generate_id('partial', obs.vendor, obs.service)}",

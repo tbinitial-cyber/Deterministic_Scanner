@@ -19,7 +19,7 @@ def match_entities(observed: list[ProcessingEntity], documented: list[Processing
             s_doc = normalize_string(doc.service)
             
             if v_obs == v_doc and v_obs:
-                if s_obs == s_doc:
+                if s_obs == s_doc and s_obs:
                     best_match_type = 'matched'
                     best_doc = doc
                     matching_fields = ['vendor', 'service']
@@ -31,15 +31,18 @@ def match_entities(observed: list[ProcessingEntity], documented: list[Processing
                     best_doc = doc
                     matching_fields = ['vendor']
                     non_matching_fields = ['service', 'purpose']
-                    match_reason = "Vendor matches but explicitly different service identified."
+                    match_reason = "Vendor matches but service differs or is unspecified."
                     
-            elif v_doc == "broadcategory" and normalize_string(obs.category) == normalize_string(doc.category):
-                if best_match_type == 'not_documented':
-                    best_match_type = 'partial_match'
-                    best_doc = doc
-                    matching_fields = ['category']
-                    non_matching_fields = ['vendor', 'service']
-                    match_reason = "Broad wording category match."
+            elif v_doc == "broadcategory":
+                obs_cat = normalize_string(obs.category)
+                doc_cat = normalize_string(doc.category)
+                if obs_cat == doc_cat or (doc_cat == "tracking" and obs_cat in ["advertising", "analytics", "behaviouralanalytics", "marketing"]):
+                    if best_match_type == 'not_documented':
+                        best_match_type = 'partial_match'
+                        best_doc = doc
+                        matching_fields = ['category']
+                        non_matching_fields = ['vendor', 'service']
+                        match_reason = "Cookie/Tracker disclosure covers observed analytics or advertising."
                     
         results.append({
             'observed': obs,
